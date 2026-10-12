@@ -1,0 +1,18 @@
+{
+  "name": "Suyash Pandey",
+  "short_name": "SP",
+  "description": "Developer working at the intersection of code, creativity and intelligent systems.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "minimal-ui",
+  "background_color": "#151515",
+  "theme_color": "#151515",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,317 @@
+@import 'tailwindcss';
+
+/* ============================================================================
+   DESIGN TOKENS
+   The single source of truth for colour, type and motion. Every component
+   pulls from here — no hard-coded hex values in component code.
+   ========================================================================== */
+@theme {
+  /* --- Palette -------------------------------------------------------- */
+  --color-ink: #151515;
+  --color-ink-soft: #232323;
+  --color-cream: #fff4df;
+  --color-cream-dim: #f3e6cd;
+  --color-volt: #c6ff00;
+  --color-flare: #ff3cac;
+  --color-ember: #ff6b00;
+  --color-cobalt: #2457ff;
+  --color-grape: #7028e4;
+
+  /* --- Type ------------------------------------------------------------
+     Three families only. Expressive italics use font-synthesis: oblique,
+     which keeps the payload down instead of shipping a 4th family. */
+  --font-display: 'Archivo Black', 'Arial Black', 'Helvetica Neue', sans-serif;
+  --font-sans: 'Space Grotesk', 'Segoe UI', Helvetica, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* --- Motion ---------------------------------------------------------
+     A coherent timing ramp. Small feedback is fast; storytelling is slow. */
+  --ease-snap: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --animate-spin-slow: spin-slow 22s linear infinite;
+  --animate-spin-rev: spin-rev 30s linear infinite;
+  --animate-bob: bob 6s var(--ease-in-out-quart) infinite;
+  --animate-blink: blink 1.15s steps(2, jump-none) infinite;
+  --animate-marquee: marquee 26s linear infinite;
+  --animate-marquee-rev: marquee-rev 34s linear infinite;
+
+  @keyframes spin-slow {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes spin-rev {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(-3%) rotate(-2deg);
+    }
+    50% {
+      transform: translateY(3%) rotate(2deg);
+    }
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0.15;
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+  @keyframes marquee-rev {
+    from {
+      transform: translate3d(-50%, 0, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}
+
+/* ============================================================================
+   BASE
+   ========================================================================== */
+@layer base {
+  :root {
+    /* Scroll offset so anchor jumps clear the fixed nav. */
+    --nav-h: 4.5rem;
+    scroll-padding-top: var(--nav-h);
+    --grain-opacity: 0.05;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Guard against decorative bleed creating a page-wide scrollbar. */
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    /* Never let the page scroll sideways because of a rotated sticker. */
+    overflow-x: clip;
+  }
+
+  /* The preloader locks scroll; this class is removed the moment it exits. */
+  body[data-scroll-locked='true'] {
+    overflow: hidden;
+    height: 100vh;
+    overscroll-behavior: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Keyboard focus must always be visible, even with the custom cursor on. */
+  :focus-visible {
+    outline: 3px solid var(--color-volt);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-volt);
+    color: var(--color-ink);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-volt);
+    border: 2px solid var(--color-ink);
+    border-radius: 99px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* ============================================================================
+   BOOT SPLASH — critical CSS, inlined in index.html so the first paint is
+   already branded. React replaces it with <Preloader/>.
+   ========================================================================== */
+#boot-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: #151515;
+  transition: opacity 0.4s ease;
+}
+.boot-splash__mark {
+  font-family: 'Archivo Black', 'Arial Black', sans-serif;
+  font-size: clamp(3rem, 12vw, 7rem);
+  color: #c6ff00;
+  letter-spacing: -0.06em;
+}
+#boot-splash[data-hidden='true'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ============================================================================
+   UTILITIES
+   ========================================================================== */
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px currentColor;
+  paint-order: stroke fill;
+}
+
+@utility text-outline-thick {
+  color: transparent;
+  -webkit-text-stroke: 3px currentColor;
+  paint-order: stroke fill;
+}
+
+/* Expressive italic without shipping an italic cut of Archivo Black. */
+@utility text-expressive {
+  font-style: italic;
+  font-synthesis: style;
+}
+
+/* Film grain. A tiny inlined SVG turbulence, tiled — cheaper than a blur
+   filter over a full-screen surface. */
+@utility grain {
+  position: relative;
+}
+@utility grain-layer {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: var(--grain-opacity);
+  mix-blend-mode: overlay;
+}
+
+/* Halftone dot field. */
+@utility halftone {
+  background-image: radial-gradient(currentColor 1.1px, transparent 1.2px);
+  background-size: 9px 9px;
+}
+
+/* Diagonal tape stripes. */
+@utility stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    currentColor 0 6px,
+    transparent 6px 14px
+  );
+}
+
+/* A hard, offset "sticker" shadow used across buttons and cards. */
+@utility shadow-block {
+  box-shadow: 6px 6px 0 0 var(--color-ink);
+}
+@utility shadow-block-lg {
+  box-shadow: 12px 12px 0 0 var(--color-ink);
+}
+
+/* 3D stage for the hero fly-through. */
+@utility stage-3d {
+  perspective: 900px;
+  perspective-origin: 50% 48%;
+  transform-style: preserve-3d;
+}
+@utility preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Marquee track: content is duplicated, we translate by exactly -50%. */
+@utility marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Masked text reveal: the clip box is the animation, the glyph never moves
+   horizontally, so line metrics stay stable. */
+@utility line-mask {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.06em;
+  margin-block: -0.06em;
+}
+
+/* ============================================================================
+   CUSTOM CURSOR
+   Only ever mounted on fine-pointer devices. If it fails to mount, the native
+   cursor is untouched — these classes are additive, never a replacement.
+   ========================================================================== */
+@media (pointer: fine) {
+  body[data-cursor-active='true'] {
+    cursor: none;
+  }
+  body[data-cursor-active='true'] a,
+  body[data-cursor-active='true'] button,
+  body[data-cursor-active='true'] input,
+  body[data-cursor-active='true'] textarea,
+  body[data-cursor-active='true'] select,
+  body[data-cursor-active='true'] [tabindex] {
+    cursor: none;
+  }
+}
+/* While the user is selecting text, hand the pointer back. */
+body[data-selecting='true'],
+body[data-selecting='true'] * {
+  cursor: auto !important;
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   A single global kill-switch. Components also branch on useReducedMotion()
+   so scroll timelines are never built in the first place.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Respect the user's OS-level transparency preference too. */
+@media (prefers-reduced-transparency: reduce) {
+  .grain-layer {
+    display: none;
+  }
+}
