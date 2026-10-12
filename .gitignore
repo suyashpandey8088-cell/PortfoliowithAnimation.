@@ -1,0 +1,41 @@
+# deps
+node_modules
+.pnp
+.pnp.js
+
+# build output
+dist
+dist-ssr
+build
+*.local
+
+# env — never commit credentials
+.env
+.env.*
+!.env.example
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# editors / os
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# tooling caches
+.cache
+.vite
+.turbo
+coverage
+
+# typescript incremental build info
+*.tsbuildinfo

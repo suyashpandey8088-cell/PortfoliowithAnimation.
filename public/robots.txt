@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# The 404 route is a client-side SPA route; no reason to crawl it.
+Disallow: /404
+
+Sitemap: https://your-domain.com/sitemap.xml

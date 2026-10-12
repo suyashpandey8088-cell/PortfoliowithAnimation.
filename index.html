@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#151515" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FFF4DF" media="(prefers-color-scheme: light)" />
+
+    <title>Suyash Pandey — Developer, AI &amp; Digital Experiences</title>
+    <meta
+      name="description"
+      content="Portfolio of Suyash Pandey — a developer working at the intersection of code, creativity and intelligent systems. AI, web development, data and software solutions."
+    />
+    <meta name="author" content="Suyash Pandey" />
+    <meta name="color-scheme" content="dark light" />
+
+    <!-- Favicon: the SP monogram, drawn as SVG so it stays crisp at any size -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph / social sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Suyash Pandey" />
+    <meta property="og:title" content="Suyash Pandey — Developer, AI &amp; Digital Experiences" />
+    <meta
+      property="og:description"
+      content="An interactive digital universe: AI, web development, data and software solutions, told through scroll-driven animation."
+    />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Suyash Pandey — oversized SP monogram on ink black with electric lime accents" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Suyash Pandey — Developer, AI &amp; Digital Experiences" />
+    <meta
+      name="twitter:description"
+      content="An interactive digital universe: AI, web development, data and software solutions."
+    />
+    <meta name="twitter:image" content="/og-image.png" />
+
+    <!--
+      Canonical URL is injected at runtime by src/lib/seo.ts from
+      VITE_SITE_URL. It is deliberately absent here: a literal href="/" would
+      be treated as a build-time asset reference and break the production
+      build.
+    -->
+
+    <!--
+      Fonts: three families only.
+        Archivo Black   -> oversized display headlines
+        Space Grotesk   -> body, UI and variable-weight headings
+        Space Mono      -> technical metadata labels
+      `display=swap` means text paints immediately in a fallback face rather
+      than blocking on the font download.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!--
+      Critical CSS for the boot splash only. Inlined so the very first paint is
+      already the branded loading screen — no white flash while React boots.
+      <Preloader /> renders the full sequence on top and removes #boot-splash.
+    -->
+    <style>
+      #boot-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: grid;
+        place-items: center;
+        background: #151515;
+      }
+      .boot-splash__mark {
+        font-family: 'Archivo Black', 'Arial Black', 'Helvetica Neue', sans-serif;
+        font-size: clamp(3rem, 12vw, 7rem);
+        color: #c6ff00;
+        letter-spacing: -0.06em;
+      }
+    </style>
+    <div id="boot-splash" aria-hidden="true">
+      <span class="boot-splash__mark">SP</span>
+    </div>
+
+    <!-- Static, crawlable fallback for no-JS clients and crawlers. -->
+    <noscript>
+      <div style="padding: 2rem; font-family: system-ui, sans-serif; line-height: 1.6">
+        <h1>Suyash Pandey</h1>
+        <p>
+          Developer working at the intersection of code, creativity and intelligent systems.
+          This site is an animation-heavy single page app — please enable JavaScript for the
+          full experience, or email
+          <a href="mailto:your.email@example.com">your.email@example.com</a>.
+        </p>
+        <h2>Experience</h2>
+        <ol>
+          <li>AI Intern</li>
+          <li>Data Entry Intern</li>
+          <li>AI Intern</li>
+          <li>Web Developer Intern</li>
+          <li>Solution Developer Intern</li>
+        </ol>
+      </div>
+    </noscript>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
